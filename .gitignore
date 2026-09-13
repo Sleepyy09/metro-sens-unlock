@@ -1,5 +1,5 @@
-build/
 dist/
-__pycache__/
-.venv/
 NEXUS.md
+REPORT.md
+design/
+media/

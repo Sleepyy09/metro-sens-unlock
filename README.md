@@ -1,6 +1,12 @@
-# Metro Exodus controller sensitivity unlock
+# MetroSensUnlock 2.0.0
 
-MetroSensUnlock 2.0.0 is a single offline HTML tool. Open it in your browser, select your own Metro Exodus executable and config, then download modified copies. It keeps the controller sensitivity patch from the original tool without bundling an executable, DLL, Python runtime or installer.
+An offline browser tool for adjusting Metro Exodus controller look and aiming sensitivity beyond the stock look limit. Select your own game files, choose your settings and download modified copies for manual installation.
+
+**[Download MetroSensUnlock 2.0.0 Offline ZIP](https://github.com/Sleepyy09/metro-sens-unlock/releases/download/v2.0.0/MetroSensUnlock-2.0.0-Offline.zip)**
+
+Extract the ZIP and open `MetroSensUnlock.html`. No installation, Python, administrator access or internet connection is needed to run the tool. Keep the extracted files together so the instructions and hashes are available.
+
+This is the current offline edition. The native launcher has been retired. Automated tests and executable equivalence checks passed; real browser interaction and controller gameplay checks remain outstanding.
 
 The ZIP contains four files: `MetroSensUnlock.html`, this README, `LICENSE` and `SHA256SUMS.txt`. JavaScript runs locally. There are no external assets, network calls, telemetry, update checks or persistent browser storage. No game executable is distributed.
 
@@ -11,6 +17,14 @@ The ZIP contains four files: `MetroSensUnlock.html`, this README, `LICENSE` and 
 - Only the recognised sensitivity descriptors and four instructions change in the executable. Only base and active preset sensitivity lines change in the selected config.
 
 Nothing from this tool runs while you play. Saves, input mappings and other controller systems are not edited. Single-player use only.
+
+## How it works
+
+Metro limits sensitivity inside its executable as well as its config. The tool changes recognised sensitivity limits and four instructions in a copy of `MetroExodus.exe`, then writes your chosen values into a copy of `user.cfg`. Config editing alone does not remove the executable's limits.
+
+Files stay in browser memory while the tool prepares them. Selecting them does not upload them, and preparing a download does not overwrite either original. You install the downloaded copies yourself. An executable that already has the complete patch only needs a new config.
+
+The tool rejects malformed files, ambiguous patch locations and incomplete patches. It checks its generated executable again before offering a download. Changing an input or setting clears previously prepared downloads.
 
 ## Install
 
@@ -25,7 +39,7 @@ Nothing from this tool runs while you play. Saves, input mappings and other cont
 
 Preparing or downloading copies does not install them. The browser cannot check whether Metro is running, detect the active profile, overwrite the originals or confirm installation. Files in protected installation folders may require Windows permission to replace manually.
 
-## Update from the old tool
+## Existing patches and game updates
 
 Select the executable you currently use. If it is fully patched, only a new config is needed. Keep the old tool's original `MetroExodus.exe.sensunlock.bak` for recovery. The old launcher and its `_internal` folder are no longer needed to use this edition.
 
@@ -41,7 +55,7 @@ Restoring a config backup also restores any unrelated settings saved in it. Remo
 
 ## Compatibility and verification
 
-The patch was developed for the Steam Enhanced Edition. In read-only testing on 2026-09-13, the HTML implementation reproduced the installed Python patch exactly from its stock backup:
+The patch was developed for the Steam Enhanced Edition. In read-only testing on 2026-09-13, the HTML implementation reproduced the existing patched executable exactly from its stock backup:
 
 | Check | Result |
 |---|---|
@@ -50,7 +64,7 @@ The patch was developed for the Steam Enhanced Edition. In read-only testing on 
 | File size | 25,697,352 bytes, unchanged |
 | Changed bytes on this build | 18 |
 
-The byte count depends on the build. The earlier README's fixed 14-byte claim has been removed.
+The byte count depends on the game build.
 
 The original edition and GOG, Epic and Game Pass builds remain untested. Passing pattern validation is not a compatibility guarantee. The tool requires 10 unique controller descriptors and four unique instruction sites. Invalid headers, ambiguous matches, unexpected ranges and partial patches are refused. Maximum selected sizes are 128 MB for the executable and 1 MB for the config.
 
@@ -66,15 +80,14 @@ The browser needs JavaScript and its native Web Crypto API. If downloads acquire
 
 Browsers and antivirus scanners can flag a generated executable. This package does not guarantee a particular Nexus scan badge. Do not disable security software to use it. Consult the scanner vendor or Nexus support if a file is flagged. Nexus describes its [scan process](https://help.nexusmods.com/article/128-anti-virus-false-positives) and [quarantine review](https://help.nexusmods.com/article/117-why-has-my-mod-been-quarantined).
 
-For a Nexus release, use the source-only ZIP, disclose AI-assisted code development under the applicable current tags, and describe manual installation. Do not upload a modified game executable. No Nexus upload or current scanner review has been performed for this release.
+The download contains source and documentation only. Do not redistribute a generated game executable or personal config. No Nexus upload or current scanner review has been performed for this release.
 
 ## Development
 
-No package installation is needed. Run `node tests/selftest.cjs`, then `pwsh -File build.ps1`. BUILDING.md in the source repository describes the full checks and recipe.
+The complete runtime is in `MetroSensUnlock.html`. No package installation is needed. Run `node tests/selftest.cjs`, then `pwsh -File build.ps1`. The build verifies the four-file archive and prints its SHA-256. [BUILDING.md](https://github.com/Sleepyy09/metro-sens-unlock/blob/main/BUILDING.md) describes the full checks and recipe.
 
 Source: [Sleepyy09/metro-sens-unlock](https://github.com/Sleepyy09/metro-sens-unlock). Author SLEEP. MIT licence.
 
-## Changelog
+## Version 2.0.0
 
-- 2.0.0: Offline HTML tool replaces the packaged Python application. Preserves the sensitivity patch, adds defensive parsing and partial-patch rejection, and uses manual downloads and restoration.
-- 1.0.0: Original Python sensitivity patcher.
+Offline HTML interface, look and ADS controls, defensive executable/config parsing, partial-patch rejection, manual downloads and restoration. The release contains no native launcher, DLLs or bundled runtime. Development was AI-assisted; the source and tests are available in this repository.
