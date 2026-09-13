@@ -1,62 +1,80 @@
-# Metro Exodus – Controller Sensitivity Unlock
+# Metro Exodus controller sensitivity unlock
 
-Metro Exodus caps controller look speed far too low, and editing `joy_sens_x` in `user.cfg` doesn't help: the engine clamps it to 1.0 on load, and on the default sensitivity preset it isn't even a multiplier — it's a slider position mapped to a hard-coded 0.5×–1.5× range. This tool patches that out and lets you set any look / aim speed you like.
+MetroSensUnlock 2.0.0 is a single offline HTML tool. Open it in your browser, select your own Metro Exodus executable and config, then download modified copies. It keeps the controller sensitivity patch from the original tool without bundling an executable, DLL, Python runtime or installer.
 
-## What it does
+The ZIP contains four files: `MetroSensUnlock.html`, this README, `LICENSE` and `SHA256SUMS.txt`. JavaScript runs locally. There are no external assets, network calls, telemetry, update checks or persistent browser storage. No game executable is distributed.
 
-Patches `MetroExodus.exe` (a backup `MetroExodus.exe.sensunlock.bak` is kept next to it) so that:
+## What it changes
 
-- **Look speed = `joy_sens_x`**, a plain multiplier, on every sensitivity preset. The stock in-game slider maxes out at the equivalent of **1.5**; the tool lets you go up to 20.
-- **ADS speed = `joy_sens_aiming_x` × look speed** (0.05–1.0). The engine never lets ADS exceed hip-fire speed; this keeps that but makes the fraction honest.
-- Raises the engine's built-in maximum for `joy_sens_x` (and its four preset copies) from 1.0 to 20.0.
+- Look speed becomes a multiplier from 0.1 to 20 across sensitivity presets. Stock preset 3 has an effective maximum of about 1.5.
+- Aim speed is 5% to 100% of look speed, matching the engine's limit that aiming cannot exceed hip-fire speed.
+- Only the recognised sensitivity descriptors and four instructions change in the executable. Only base and active preset sensitivity lines change in the selected config.
 
-It then writes the look and ADS values you choose into `user.cfg` (`%USERPROFILE%\Saved Games\Metro Exodus\<id>\user.cfg`).
+Nothing from this tool runs while you play. Saves, input mappings and other controller systems are not edited. Single-player use only.
 
-Nothing runs while you play — no background process, no memory editing, no DLL injection, no input remapping. Adaptive triggers, haptics, aim assist and every other controller feature are untouched. 14 bytes change in the exe: ten descriptor max values and four instruction operands.
+## Install
 
-## Use
+1. Close Metro Exodus. Extract the ZIP into its own folder.
+2. Keep original copies of `MetroExodus.exe` and your `user.cfg` in a separate backup folder. Do not replace these backups with patched downloads.
+3. Open `MetroSensUnlock.html` in a current desktop browser. No Python, administrator access or server is required to open the tool.
+4. Select `MetroExodus.exe` from the game installation. Steam users can find it through Properties, Installed Files, Browse. Select your profile's `user.cfg` from `%USERPROFILE%\Saved Games\Metro Exodus\<profile>\`. Launch the game once if no config exists.
+5. Set look and aim speed, confirm that the game is closed and backups are kept, then select **Prepare modified files**.
+6. Download the copies into a separate folder. A stock executable produces both downloads. An already patched executable produces only a config download.
+7. With the game closed, manually copy the downloads into their original folders. The filenames must be exactly `MetroExodus.exe` and `user.cfg`. Remove any download-number suffix before installing. Keep your original backups.
+8. Launch Metro and check look and aim speed. Increase values in small steps. Change look speed through this tool because the in-game look slider overwrites your value. The in-game aim slider can still adjust the aim fraction.
 
-1. Close the game.
-2. Extract the zip anywhere and run `MetroSensUnlock\MetroSensUnlock.exe` (keep the `_internal` folder next to it). Steam installs are found automatically; for GOG / Epic / Game Pass click **Browse…** and pick the game folder (the one containing `MetroExodus.exe`).
-3. Set **Look speed** (stock max ≈ 1.5; 2.5–5 is a good starting range) and **ADS speed** (fraction of look speed; stock presets use 0.45–0.7) and click **Apply**.
-4. Play. Re-run and Apply any time to change values.
+Preparing or downloading copies does not install them. The browser cannot check whether Metro is running, detect the active profile, overwrite the originals or confirm installation. Files in protected installation folders may require Windows permission to replace manually.
 
-Don't touch the in-game *look* sensitivity slider afterwards — it only writes 0.1–1.0 and will overwrite your value. The in-game *aim* slider is fine (it writes the same 0.01–1.0 fraction the tool does).
+## Update from the old tool
 
-Something not working? Click **Copy report** and paste the result in your bug report — it lists the exe hash, every descriptor and code site the tool found, and the current state. It reads only, never writes.
+Select the executable you currently use. If it is fully patched, only a new config is needed. Keep the old tool's original `MetroExodus.exe.sensunlock.bak` for recovery. The old launcher and its `_internal` folder are no longer needed to use this edition.
 
-**Restore original** puts the backup exe back. If Steam updates or verifies the game, the exe is replaced — just run the tool and Apply again.
+A partial or old max-only patch is refused. Restore a current clean executable using your game launcher's file verification, then select it again. Never treat a partially patched file as an original backup.
 
-## Compatibility
+After a game update, use the current executable and make a new backup. Do not restore an executable backup from an older game build.
 
-- Tested: Metro Exodus Enhanced Edition, Steam, exe SHA-256 `43dd7b0d…bb4cd9` (build current as of 2026-08).
-- Fail-closed: if any descriptor is missing or ambiguous, or the code-site count isn't exactly 4, nothing is written. The backup is only ever (re)taken from an exe that verifies as stock, so a Steam update can't leave you with a stale backup.
-- The patcher locates everything by pattern (cvar descriptor layout, then the instructions that read those cvars), not by fixed offsets. It refuses to patch — and changes nothing — unless it can validate all ten descriptors and all four code sites.
-- Original (non-Enhanced) Metro Exodus, GOG, Epic and Game Pass builds: untested. Browse to the game folder and try; it will either work or tell you it's unsupported.
-- Works with ReShade / RenoDX / DLSS swaps — different files.
+## Uninstall and restore
 
-## Building from source
+Close Metro and replace the modified executable and config with your original backups. For an old `.sensunlock.bak`, copy it and rename the copy to `MetroExodus.exe`. If the backup is missing or belongs to an older game build, use your launcher's file verification instead. File verification does not necessarily restore the personal config; reset sensitivity in the game if no config backup is available.
 
-Single-file Python (3.11+, stdlib only). Full clean-machine recipe, reviewer notes and the CI workflow that builds every release: [BUILDING.md](BUILDING.md).
+Restoring a config backup also restores any unrelated settings saved in it. Removing the HTML tool's extracted folder does not undo changes you manually installed.
 
-```
-python metro_sens_unlock.py            # GUI
-python metro_sens_unlock.py --check    # print what the patcher sees, change nothing
-pip install --no-binary pyinstaller pyinstaller==6.22.0
-.\build.ps1                            # exe (onedir, noarchive, no UPX) + SHA256SUMS + zip in dist\
-```
+## Compatibility and verification
 
-Source and release builds: https://github.com/Sleepyy09/metro-sens-unlock
+The patch was developed for the Steam Enhanced Edition. In read-only testing on 2026-09-13, the HTML implementation reproduced the installed Python patch exactly from its stock backup:
 
-## How it works
+| Check | Result |
+|---|---|
+| Stock SHA-256 | `4cd2d25479ff0b574e89bcb0351f73028bf3a232762423a5a24a5b206170f572` |
+| Patched SHA-256 | `d288b82b1f17b7ffad05822cfd6586073c418f8fd9b5b1f8b2ab0878c6e7190b` |
+| File size | 25,697,352 bytes, unchanged |
+| Changed bytes on this build | 18 |
 
-The exe holds a static console-variable descriptor table (`name*, 0, value*, f32 min, f32 max, f32 value, type*`, 0x30 bytes per entry). `joy_sens_x` is declared `min 0.1, max 1.0, default 0.95`; `user.cfg` values are clamped to that range at load.
+The byte count depends on the build. The earlier README's fixed 14-byte claim has been removed.
 
-The gamepad look code has two paths, selected by the hidden `_gamepad_preset_sens` cvar (the in-game "sensitivity preset"):
+The original edition and GOG, Epic and Game Pass builds remain untested. Passing pattern validation is not a compatibility guarantee. The tool requires 10 unique controller descriptors and four unique instruction sites. Invalid headers, ambiguous matches, unexpected ranges and partial patches are refused. Maximum selected sizes are 128 MB for the executable and 1 MB for the config.
 
-- **Preset 3 (default):** `t = (joy_sens_x − min) / (max − min)`, `look = 0.5·(1−t) + 1.5·t`, `ads = 0.05·(1−ta) + look·ta`. Turn rate per frame is `dt · π / joy_time_to_rotate_180 · look · stick^joy_prepare_mode`, ramping toward `π / joy_time_to_rotate_180_fast` when the stick is pegged. Because `t` is normalised against the descriptor's own max, raising max alone just rescales the slider — the 1.5× ceiling is in the two constants. The patch repoints those two operands at the descriptor's own `min`/`max` fields, so `look = min·(1−t) + max·t = joy_sens_x`.
-- **Presets 0–2 (legacy):** `look = sqrt(joy_sens_x)`, `ads = sqrt(joy_sens_x · joy_sens_aiming_x)`, plus the `joy_zone_*` / `joy_boost_*` stick-zone model. The patch turns the two `sqrtss` loads into `movss` so the values are the same plain multipliers as preset 3.
+UTF-8 and ANSI config bytes, unrelated lines and existing LF/CRLF endings are preserved. Duplicate sensitivity keys, invalid numbers and UTF-16 configs are refused. Missing base sensitivity keys are refused; missing active preset keys are added.
 
-Stock feel is preserved at stock values (0.95 ≈ 1.44× on preset 3 before, 0.95× after — set 1.5 for the old max).
+Automated checks exercise patching, config preservation, UI logic and release contents. This release still needs a real local-file browser interaction check and an in-game controller check. The development browser automation policy blocked opening local HTML files, so no browser visual or interaction verification is claimed.
 
-MIT licence.
+## Troubleshooting and trust
+
+Open **Compatibility and diagnostics** for the executable hash and validation result. The report does not include full paths, account identifiers or the complete config. It never sends data automatically.
+
+The browser needs JavaScript and its native Web Crypto API. If downloads acquire a numbered suffix, use the exact original filename when installing. If the launcher restores the original executable during an update or verification, recheck the new file before patching.
+
+Browsers and antivirus scanners can flag a generated executable. This package does not guarantee a particular Nexus scan badge. Do not disable security software to use it. Consult the scanner vendor or Nexus support if a file is flagged. Nexus describes its [scan process](https://help.nexusmods.com/article/128-anti-virus-false-positives) and [quarantine review](https://help.nexusmods.com/article/117-why-has-my-mod-been-quarantined).
+
+For a Nexus release, use the source-only ZIP, disclose AI-assisted code development under the applicable current tags, and describe manual installation. Do not upload a modified game executable. No Nexus upload or current scanner review has been performed for this release.
+
+## Development
+
+No package installation is needed. Run `node tests/selftest.cjs`, then `pwsh -File build.ps1`. BUILDING.md in the source repository describes the full checks and recipe.
+
+Source: [Sleepyy09/metro-sens-unlock](https://github.com/Sleepyy09/metro-sens-unlock). Author SLEEP. MIT licence.
+
+## Changelog
+
+- 2.0.0: Offline HTML tool replaces the packaged Python application. Preserves the sensitivity patch, adds defensive parsing and partial-patch rejection, and uses manual downloads and restoration.
+- 1.0.0: Original Python sensitivity patcher.

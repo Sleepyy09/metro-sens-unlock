@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="Offline controller sensitivity tool for Metro Exodus. Select local files and download modified copies.">
+<title>MetroSensUnlock 2.0.0 | Controller sensitivity</title>
+<style>
+:root{color-scheme:light dark;--background:#f4f5f3;--panel:#fff;--text:#202820;--muted:#536050;--accent:#315b38;--on-accent:#fff;--line:#7c8879;--error:#9e2323;font-family:"Segoe UI",system-ui,sans-serif;color:var(--text);background:var(--background);font-size:16px;line-height:1.55}
+@media(prefers-color-scheme:dark){:root{--background:#151815;--panel:#202520;--text:#eef2e9;--muted:#b1bdae;--accent:#b7d89b;--on-accent:#182218;--line:#768671;--error:#ffb4ab}}
+*{box-sizing:border-box}body{margin:0}main{max-width:1040px;margin:0 auto;padding:48px 24px}header{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:40px}.brand{font-weight:650;letter-spacing:.04em}.edition,.muted,small{color:var(--muted)}.edition,small{font-size:14px}.layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:48px}h1{font-size:40px;line-height:1.12;letter-spacing:-.04em;font-weight:650;margin:0 0 24px}h2{font-size:22px;line-height:1.3;font-weight:650;margin:0 0 16px}h3{font-size:17px;margin:24px 0 8px}p{margin:0 0 16px}aside ol{padding-left:22px}li{margin-bottom:12px}code,pre{font-family:ui-monospace,Consolas,monospace;font-size:.87em;overflow-wrap:anywhere}.form-panel{background:var(--panel);padding:32px;border-radius:6px}section+section{border-top:1px solid var(--line);padding-top:24px;margin-top:24px}label{display:block;font-weight:600;margin-bottom:8px}input[type=file]{width:100%;font:inherit;font-size:14px;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--text)}input::file-selector-button{font:inherit;color:var(--text);background:var(--background);border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin-right:12px;cursor:pointer}.file-row+.file-row{margin-top:24px}.status{font-size:14px;color:var(--muted);margin:8px 0 0;overflow-wrap:anywhere}.error{color:var(--error)}fieldset{border:0;padding:0;margin:0;min-width:0}fieldset:disabled{opacity:.6}.setting+.setting{margin-top:24px}.setting-head{display:flex;align-items:center;justify-content:space-between;gap:16px}.setting-head label{margin:0}input[type=number]{font:inherit;font-variant-numeric:tabular-nums;width:112px;padding:8px;border:1px solid var(--line);border-radius:6px;color:var(--text);background:var(--panel)}input[type=range]{width:100%;margin:16px 0 8px;accent-color:var(--accent)}.check{display:flex;align-items:flex-start;gap:12px;font-size:14px;font-weight:400;margin:24px 0}input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin:2px 0;accent-color:var(--accent)}button,.download{font:inherit;font-weight:600;border:1px solid var(--accent);border-radius:6px;padding:12px 16px;cursor:pointer;background:var(--accent);color:var(--on-accent);transition:filter 120ms ease-out}button{width:100%}button:hover:not(:disabled),.download:hover{filter:brightness(.93)}button:disabled{cursor:not-allowed;opacity:.5}a{color:var(--accent);text-underline-offset:3px}.download{display:block;text-align:center;text-decoration:none;margin:12px 0}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}summary{cursor:pointer;font-weight:600}details{margin-top:24px}pre{white-space:pre-wrap;max-height:320px;overflow:auto;background:var(--background);padding:16px;border-radius:6px}footer{margin-top:40px;font-size:14px;color:var(--muted)}[hidden]{display:none!important}#result-status{margin-top:16px}#results{margin-top:24px;border-top:1px solid var(--line);padding-top:24px}.skip{position:absolute;left:16px;top:-60px;background:var(--panel);padding:12px}.skip:focus{top:8px}
+@media(max-width:800px){main{padding:24px 16px}.layout{grid-template-columns:1fr;gap:24px}header{margin-bottom:24px}h1{font-size:36px}.form-panel{padding:24px}aside ol{margin-bottom:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to file selection</a>
+<main>
+<header><span class="brand">SLEEP / MetroSensUnlock</span><span class="edition">2.0.0 · Offline edition</span></header>
+<div class="layout">
+<aside>
+<h1>Set your own<br>look speed.</h1>
+<p>Controller sensitivity for Metro Exodus, beyond the in-game slider.</p>
+<p class="muted">Select your files, set your sensitivity and download modified copies. Everything happens in this browser. Nothing is uploaded.</p>
+<h3>Before you start</h3>
+<ol>
+<li>Close Metro Exodus.</li>
+<li>Keep a copy of your original <code>MetroExodus.exe</code> and <code>user.cfg</code> somewhere safe.</li>
+<li>Select the files on this page. Your originals stay unchanged until you install the downloads yourself.</li>
+</ol>
+<details><summary>Where are my files?</summary><p>In Steam, open the game's Properties, then Installed Files and Browse. Select <code>MetroExodus.exe</code>.</p><p>Find <code>user.cfg</code> under <code>%USERPROFILE%\Saved Games\Metro Exodus\&lt;profile&gt;\</code>. Choose the profile you play. Launch the game once if it is missing.</p></details>
+<details><summary>Updating an older version</summary><p>Select your currently patched executable to change sensitivity without patching it again. Keep the original <code>MetroExodus.exe.sensunlock.bak</code> made by the old tool.</p><p>If the tool reports a partial patch, restore a clean executable with your game launcher before continuing. Do not treat a partially patched file as an original backup.</p></details>
+<details><summary>Restore the original game</summary><p>Close Metro. Replace the modified executable and config with your original backups. If using the old tool's backup, copy it and name the copy <code>MetroExodus.exe</code>.</p><p>After a game update, use the launcher's file verification to obtain the current executable instead of restoring an older backup. Reverting the config also restores any other settings saved in that backup.</p></details>
+</aside>
+<div class="form-panel" id="tool">
+<noscript><p class="error">JavaScript must be enabled for local file processing. This tool has no external scripts.</p></noscript>
+<section aria-labelledby="files-heading">
+<h2 id="files-heading">1. Select your files</h2>
+<div class="file-row"><label for="exe-file">Game executable</label><input id="exe-file" type="file" accept=".exe,.bak" aria-describedby="exe-status"><p id="exe-status" class="status" role="status">Select MetroExodus.exe or a stock backup.</p></div>
+<div class="file-row"><label for="cfg-file">Your user.cfg</label><input id="cfg-file" type="file" accept=".cfg" aria-describedby="cfg-status"><p id="cfg-status" class="status" role="status">Only sensitivity settings will change.</p></div>
+</section>
+<section aria-labelledby="settings-heading"><h2 id="settings-heading">2. Adjust sensitivity</h2>
+<fieldset id="settings" disabled aria-labelledby="settings-heading">
+<div class="setting"><div class="setting-head"><label for="look">Look speed</label><input id="look" type="number" min="0.1" max="20" step="any" value="1.5" aria-describedby="look-help"></div><input id="look-range" type="range" min="0.1" max="20" step="0.05" value="1.5" aria-label="Look speed slider"><small id="look-help">0.1 to 20. Stock preset 3 reaches about 1.5. Start low and adjust in small steps.</small></div>
+<div class="setting"><div class="setting-head"><label for="ads">Aim speed, % of look</label><input id="ads" type="number" min="5" max="100" step="any" value="70" aria-describedby="ads-help"></div><input id="ads-range" type="range" min="5" max="100" step="1" value="70" aria-label="Aim speed slider"><small id="ads-help">5% to 100%. Aim speed cannot exceed look speed.</small></div>
+</fieldset>
+<p class="status">After installation, change look speed here. The in-game look slider overwrites your value.</p>
+<label class="check"><input id="backup-check" type="checkbox"><span>Metro is closed, and I have kept my original executable and config backups.</span></label>
+<button id="prepare" type="button" disabled>Prepare modified files</button>
+<p id="result-status" class="status" role="status" aria-live="polite"></p>
+<div id="results" hidden>
+<h3>3. Download and install</h3>
+<p id="result-summary"></p>
+<a id="exe-download" class="download" hidden>Download modified executable</a>
+<a id="cfg-download" class="download">Download modified user.cfg</a>
+<p>Save downloads to a separate folder. With Metro closed, copy them into the original folders and replace the matching files. The executable must be named <code>MetroExodus.exe</code> and the config <code>user.cfg</code>, with no download-number suffix.</p>
+<p class="muted">Preparing or downloading files does not install them. This page cannot check whether the game is running or whether you installed the copies.</p>
+</div>
+</section>
+<details><summary>Compatibility and diagnostics</summary><p>Based on the Steam Enhanced Edition patch. Other builds are untested, even if their patterns match. Partial or unrecognised files are refused.</p><p>Browsers and security scanners may still flag a generated executable. This tool does not guarantee Nexus approval.</p><pre id="report">Select a game executable to see its validation report.</pre></details>
+</div>
+</div>
+<footer>MetroSensUnlock 2.0.0 by SLEEP · MIT licence · Single-player use. No installer, background process or network connection.</footer>
+</main>
+<script id="metro-core">
+"use strict";
+// MIT License, copyright 2026 SLEEP. See the accompanying LICENSE file.
+const Metro = (() => {
+    const VERSION = "2.0.0";
+    const LOOK = ["joy_sens_x", ...[0, 1, 2, 3].map(i => `preset${i}_joy_sens_x`)];
+    const AIM = ["joy_sens_aiming_x", ...[0, 1, 2, 3].map(i => `preset${i}_joy_sens_aiming_x`)];
+    const CVARS = [...LOOK, ...AIM];
+    const fail = message => { throw new Error(message); };
+    const equal = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
+    function matches(bytes, pattern, start = 0, end = bytes.length, accept = () => true) {
+        const hits = [];
+        for (let p = bytes.indexOf(pattern[0], start); p >= 0 && p + pattern.length <= end; p = bytes.indexOf(pattern[0], p + 1)) {
+            if (pattern.every((v, i) => bytes[p + i] === v) && accept(p)) {
+                hits.push(p);
+                if (hits.length > 1024) fail("Too many matching patterns. This executable is unsupported.");
+            }
+        }
+        return hits;
+    }
+    function pe(bytes) {
+        if (!(bytes instanceof Uint8Array) || bytes.length < 256 || bytes.length > 128 * 1024 * 1024) fail("Select a supported Windows executable, at most 128 MB.");
+        const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+        const bounds = (p, n) => { if (!Number.isSafeInteger(p) || p < 0 || n < 0 || p + n > bytes.length) fail("Truncated or invalid executable."); };
+        const u16 = p => { bounds(p, 2); return view.getUint16(p, true); };
+        const u32 = p => { bounds(p, 4); return view.getUint32(p, true); };
+        const i32 = p => { bounds(p, 4); return view.getInt32(p, true); };
+        const u64 = p => { bounds(p, 8); return view.getBigUint64(p, true); };
+        const f32 = p => { bounds(p, 4); return view.getFloat32(p, true); };
+        if (u16(0) !== 0x5a4d) fail("Not a Windows executable.");
+        const h = u32(0x3c);
+        if (u32(h) !== 0x4550 || u16(h + 4) !== 0x8664 || u16(h + 24) !== 0x20b) fail("Only 64-bit Metro Exodus executables are supported.");
+        const count = u16(h + 6), optionalSize = u16(h + 20), base = u64(h + 48);
+        if (count < 1 || count > 96 || optionalSize < 112) fail("Invalid executable header.");
+        const table = h + 24 + optionalSize;
+        bounds(table, count * 40);
+        const sections = [];
+        for (let i = 0; i < count; i++) {
+            const s = table + i * 40, rva = u32(s + 12), size = u32(s + 16), raw = u32(s + 20), flags = u32(s + 36);
+            if (!size) continue;
+            bounds(raw, size);
+            if (raw < table + count * 40 || rva + size > 0x100000000) fail("Invalid section bounds.");
+            if (sections.some(t => (raw < t.raw + t.size && t.raw < raw + size) || (rva < t.rva + t.size && t.rva < rva + size))) fail("Overlapping executable sections.");
+            sections.push({rva, size, raw, executable: !!(flags & 0x20000000)});
+        }
+        const section = (p, n = 1) => sections.find(s => p >= s.raw && p + n <= s.raw + s.size);
+        const va = p => { const s = section(p); if (!s) fail("Unmapped executable address."); return base + BigInt(s.rva + p - s.raw); };
+        const offset = address => {
+            const rva = address - base;
+            const s = sections.find(t => rva >= BigInt(t.rva) && rva < BigInt(t.rva + t.size));
+            return s ? s.raw + Number(rva - BigInt(s.rva)) : null;
+        };
+        return {view, bounds, u16, u32, i32, u64, f32, sections, section, va, offset};
+    }
+    function inspect(bytes) {
+        const p = pe(bytes), entries = {};
+        for (const name of CVARS) {
+            const candidates = new Set();
+            for (const s of matches(bytes, new TextEncoder().encode(name + "\0"))) {
+                if (!p.section(s, name.length + 1) || (s > 0 && /[a-zA-Z0-9_]/.test(String.fromCharCode(bytes[s - 1])))) continue;
+                const ptr = new Uint8Array(8);
+                new DataView(ptr.buffer).setBigUint64(0, p.va(s), true);
+                for (const e of matches(bytes, ptr)) {
+                    const section = p.section(e, 0x30);
+                    if (!section || section.executable) continue;
+                    const expectedMin = Math.fround(LOOK.includes(name) ? 0.1 : 0.01);
+                    if (p.u64(e + 8) === 0n && p.u64(e + 0x10) === p.va(e + 0x20) && p.f32(e + 0x18) === expectedMin && [1, 20].includes(p.f32(e + 0x1c))) candidates.add(e);
+                }
+            }
+            if (candidates.size !== 1) fail(`Unsupported executable: ${name} has ${candidates.size} valid descriptors; expected one.`);
+            entries[name] = [...candidates][0];
+        }
+        if (new Set(Object.values(entries)).size !== 10) fail("Overlapping controller descriptors.");
+        const sx = entries.joy_sens_x, sa = entries.joy_sens_aiming_x;
+        const sxMin = p.va(sx + 0x18), sxMax = p.va(sx + 0x1c), sxVal = p.va(sx + 0x20), saVal = p.va(sa + 0x20);
+        function rip(prefix, target) {
+            const n = prefix.length + 4;
+            return matches(bytes, prefix, 0, bytes.length, o => p.section(o, n)?.executable && p.va(o) + BigInt(n + p.i32(o + prefix.length)) === target);
+        }
+        const anchors = rip([0xf3, 0x0f, 0x10, 0x15], sxVal);
+        if (anchors.length !== 1) fail("Unsupported executable: look function is missing or ambiguous.");
+        const patches = [];
+        for (const [prefix, constant, target] of [
+            [[0xf3, 0x0f, 0x59, 0x1d], 1.5, sxMax],
+            [[0xf3, 0x44, 0x0f, 0x59, 0x15], 0.5, sxMin]
+        ]) {
+            const n = prefix.length + 4;
+            const sites = matches(bytes, prefix, anchors[0], Math.min(anchors[0] + 0x100, bytes.length)).filter(o => {
+                if (!p.section(o, n)?.executable) return false;
+                const cur = p.va(o) + BigInt(n + p.i32(o + prefix.length)), off = p.offset(cur);
+                return cur === target || (off !== null && p.section(off, 4) && p.f32(off) === constant);
+            });
+            if (sites.length !== 1) fail("Unsupported executable: sensitivity instruction is missing or ambiguous.");
+            const o = sites[0], replacement = bytes.slice(o, o + n), disp = target - (p.va(o) + BigInt(n));
+            if (disp < -2147483648n || disp > 2147483647n) fail("Unsupported instruction displacement.");
+            new DataView(replacement.buffer).setInt32(n - 4, Number(disp), true);
+            patches.push({offset: o, before: bytes.slice(o, o + n), after: replacement});
+        }
+        for (const [sqrt, mov, target] of [
+            [[0xf3, 0x44, 0x0f, 0x51, 0x1d], [0xf3, 0x44, 0x0f, 0x10, 0x1d], sxVal],
+            [[0xf3, 0x0f, 0x51, 0x05], [0xf3, 0x0f, 0x10, 0x05], saVal]
+        ]) {
+            const sites = [...rip(sqrt, target), ...rip(mov, target)];
+            if (sites.length !== 1) fail("Unsupported executable: legacy sensitivity instruction is missing or ambiguous.");
+            const o = sites[0], before = bytes.slice(o, o + sqrt.length + 4), after = before.slice();
+            after.set(mov);
+            patches.push({offset: o, before, after});
+        }
+        const ranges = patches.map(x => [x.offset, x.offset + x.after.length]);
+        if (ranges.some((r, i) => ranges.some((t, j) => i !== j && r[0] < t[1] && t[0] < r[1]))) fail("Overlapping sensitivity instructions.");
+        const done = patches.map(x => equal(x.before, x.after));
+        const stockDescriptors = CVARS.every(c => p.f32(entries[c] + 0x1c) === 1);
+        const patchedDescriptors = CVARS.every(c => p.f32(entries[c] + 0x1c) === (LOOK.includes(c) ? 20 : 1));
+        const state = stockDescriptors && done.every(v => !v) ? "stock" : patchedDescriptors && done.every(Boolean) ? "patched" : "partial";
+        return {state, entries, patches};
+    }
+    function patch(bytes) {
+        const info = inspect(bytes);
+        if (info.state === "partial") fail("Partial patch detected. Restore a clean executable through your game launcher first.");
+        const output = bytes.slice();
+        if (info.state === "patched") return {bytes: output, changed: 0, info};
+        const view = new DataView(output.buffer);
+        for (const c of LOOK) view.setFloat32(info.entries[c] + 0x1c, 20, true);
+        for (const x of info.patches) output.set(x.after, x.offset);
+        if (inspect(output).state !== "patched") fail("Output verification failed. No download was prepared.");
+        let changed = 0;
+        for (let i = 0; i < bytes.length; i++) if (bytes[i] !== output[i]) changed++;
+        return {bytes: output, changed, info};
+    }
+    function parseConfig(bytes) {
+        if (!(bytes instanceof Uint8Array) || !bytes.length || bytes.length > 1024 * 1024 || bytes.includes(0)) fail("Select a valid user.cfg, at most 1 MB. UTF-16 files are unsupported.");
+        // Byte-preserving text view: only ASCII setting values are replaced. UTF-8 and ANSI bytes survive unchanged.
+        let text = "";
+        for (let i = 0; i < bytes.length; i += 8192) text += String.fromCharCode(...bytes.subarray(i, i + 8192));
+        const bom = text.startsWith("\xef\xbb\xbf") ? text.slice(0, 3) : "";
+        text = text.slice(bom.length);
+        if (/\r(?!\n)/.test(text)) fail("Unsupported config line endings.");
+        const lines = text.match(/[^\r\n]*(?:\r\n|\n|$)/g).filter(Boolean);
+        const values = {}, indexes = {};
+        const relevant = new Set([...CVARS, "gamepad_preset", "_gamepad_preset_sens"]);
+        lines.forEach((line, i) => {
+            const key = line.trim().split(/\s+/)[0];
+            if (!relevant.has(key)) return;
+            const m = line.match(/^([ \t]*\S+[ \t]+)([^\s]+)([ \t]*)(\r?\n)?$/);
+            if (!m || !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(m[2]) || !Number.isFinite(Number(m[2]))) fail(`Invalid value for ${key}.`);
+            if (key in values) fail(`Duplicate ${key} lines. Resolve duplicates before continuing.`);
+            values[key] = Number(m[2]); indexes[key] = {i, prefix: m[1], suffix: m[3] + (m[4] || "")};
+        });
+        for (const c of ["joy_sens_x", "joy_sens_aiming_x"]) if (!(c in values)) fail(`Not a supported user.cfg: ${c} is missing.`);
+        for (const c of ["gamepad_preset", "_gamepad_preset_sens"]) if (c in values && (!Number.isInteger(values[c]) || values[c] < 0 || values[c] > 3)) fail(`Unsupported ${c}; expected 0 to 3.`);
+        for (const c of CVARS) if (c in values && (values[c] < (LOOK.includes(c) ? 0.1 : 0.01) - 1e-7 || values[c] > 20)) fail(`Unsupported sensitivity value for ${c}.`);
+        return {bom, lines, values, indexes, newline: text.includes("\r\n") ? "\r\n" : "\n"};
+    }
+    function settings(look, ads) {
+        if (!Number.isFinite(look) || look < 0.1 || look > 20 || !Number.isFinite(ads) || ads < 0.05 || ads > 1) fail("Look speed must be 0.1 to 20 and aim speed 5% to 100%.");
+    }
+    function config(bytes, look, ads) {
+        settings(look, ads);
+        const c = parseConfig(bytes), prefixes = ["", ...new Set([c.values.gamepad_preset ?? 0, c.values._gamepad_preset_sens ?? 3])].map(v => v === "" ? "" : `preset${v}_`);
+        const changedKeys = [];
+        for (const prefix of prefixes) {
+            for (const [key, value] of [[prefix + "joy_sens_x", look], [prefix + "joy_sens_aiming_x", ads]]) {
+                const entry = c.indexes[key], formatted = String(value);
+                if (entry) c.lines[entry.i] = entry.prefix + formatted + entry.suffix;
+                else {
+                    if (c.lines.length && !c.lines[c.lines.length - 1].endsWith("\n")) c.lines[c.lines.length - 1] += c.newline;
+                    c.lines.push(`${key} ${formatted}${c.newline}`);
+                }
+                changedKeys.push(key);
+            }
+        }
+        const text = c.bom + c.lines.join("");
+        return {bytes: Uint8Array.from(text, ch => ch.charCodeAt(0)), changedKeys};
+    }
+    function initialSettings(bytes, state) {
+        const c = parseConfig(bytes), raw = c.values.joy_sens_x;
+        const v = Math.max(0.1, Math.min(1, raw));
+        const look = state === "stock" ? ((c.values._gamepad_preset_sens ?? 3) === 3 ? 0.5 + (v - 0.1) / 0.9 : Math.sqrt(v)) : raw;
+        return {look: Math.min(20, Math.max(0.1, Number(look.toFixed(4)))), ads: Math.min(1, Math.max(0.05, c.values.joy_sens_aiming_x))};
+    }
+    return {VERSION, inspect, patch, parseConfig, config, settings, initialSettings};
+})();
+</script>
+<script id="metro-ui">
+"use strict";
+(() => {
+    const $ = id => document.getElementById(id);
+    let exe = null, cfg = null, info = null, generation = 0, urls = [], busy = false;
+    let inputReport = "Select a game executable to see its validation report.";
+    const revisions = {exe: 0, cfg: 0};
+    function status(id, text, error = false) { $(id).textContent = text; $(id).classList.toggle("error", error); }
+    function clearOutputs() {
+        generation++;
+        urls.forEach(url => URL.revokeObjectURL(url)); urls = [];
+        for (const id of ["exe-download", "cfg-download"]) $(id).removeAttribute("href");
+        $("results").hidden = true; status("result-status", ""); $("report").textContent = inputReport;
+    }
+    function ready() {
+        const valid = exe && cfg && info && info.state !== "partial";
+        $("settings").disabled = !valid || busy;
+        $("prepare").disabled = !valid || busy || !$("backup-check").checked;
+    }
+    function updateInitial() {
+        if (exe && cfg && info?.state !== "partial") {
+            const initial = Metro.initialSettings(cfg, info.state);
+            $("look").value = initial.look; $("look-range").value = initial.look;
+            $("ads").value = Number((initial.ads * 100).toFixed(4)); $("ads-range").value = initial.ads * 100;
+        }
+    }
+    for (const kind of ["exe", "cfg"]) {
+        $(kind + "-file").addEventListener("change", async event => {
+            const revision = ++revisions[kind], file = event.target.files[0];
+            clearOutputs(); $("backup-check").checked = false;
+            if (kind === "exe") { exe = null; info = null; inputReport = "No executable validated."; $("report").textContent = inputReport; } else cfg = null;
+            ready();
+            if (!file) { status(kind + "-status", "No file selected."); return; }
+            status(kind + "-status", "Reading and validating locally...");
+            try {
+                const limit = kind === "exe" ? 128 * 1024 * 1024 : 1024 * 1024;
+                if (file.size > limit) throw new Error(`File is too large. Limit: ${limit / 1024 / 1024} MB.`);
+                const bytes = new Uint8Array(await file.arrayBuffer());
+                if (revision !== revisions[kind]) return;
+                if (kind === "exe") {
+                    const checked = Metro.inspect(bytes);
+                    const hash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))].map(x => x.toString(16).padStart(2, "0")).join("");
+                    if (revision !== revisions[kind]) return;
+                    exe = bytes; info = checked;
+                    inputReport = `MetroSensUnlock ${Metro.VERSION}\nInput state: ${info.state}\nSize: ${bytes.length} bytes\nSHA-256: ${hash}\nDescriptors: 10 unique\nCode sites: 4 unique\n` + info.patches.map(x => `Instruction at 0x${x.offset.toString(16)}`).join("\n");
+                    $("report").textContent = inputReport;
+                    status("exe-status", info.state === "partial" ? "Partial patch. Restore a clean executable through your launcher first." : info.state === "patched" ? "Already patched. You can update your sensitivity config." : "Stock executable validated. Ready to prepare a patched copy.", info.state === "partial");
+                } else {
+                    Metro.parseConfig(bytes); cfg = bytes;
+                    status("cfg-status", "Config validated. Unrelated settings will be preserved.");
+                }
+                updateInitial();
+            } catch (error) {
+                if (revision !== revisions[kind]) return;
+                if (kind === "exe") { exe = null; info = null; } else cfg = null;
+                status(kind + "-status", error.message, true);
+            }
+            ready();
+        });
+    }
+    for (const key of ["look", "ads"]) {
+        $(key).addEventListener("input", () => { clearOutputs(); if ($(key).value !== "" && $(key).validity.valid) $(key + "-range").value = $(key).value; });
+        $(key + "-range").addEventListener("input", () => { $(key).value = $(key + "-range").value; clearOutputs(); });
+    }
+    $("backup-check").addEventListener("change", () => { clearOutputs(); ready(); });
+    function link(id, bytes, name) {
+        const url = URL.createObjectURL(new Blob([bytes], {type: "application/octet-stream"}));
+        urls.push(url); $(id).href = url; $(id).download = name; $(id).hidden = false;
+    }
+    $("prepare").addEventListener("click", async () => {
+        if (!exe || !cfg || !info || info.state === "partial" || !$("backup-check").checked || busy) return;
+        clearOutputs();
+        const current = generation;
+        busy = true; ready(); status("result-status", "Preparing copies locally...");
+        try {
+            const look = $("look").valueAsNumber, ads = $("ads").valueAsNumber / 100;
+            Metro.settings(look, ads);
+            const patchedCfg = Metro.config(cfg, look, ads), patched = Metro.patch(exe);
+            const hash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", patched.bytes))].map(x => x.toString(16).padStart(2, "0")).join("");
+            if (current !== generation) return;
+            if (patched.changed) link("exe-download", patched.bytes, "MetroExodus.exe"); else $("exe-download").hidden = true;
+            link("cfg-download", patchedCfg.bytes, "user.cfg");
+            $("result-summary").textContent = `Look speed ${look}, aim speed ${Number((ads * 100).toFixed(4))}%. ` + (patched.changed ? "Download both files below." : "Your executable is already patched. Download only the config.");
+            $("report").textContent += `\nOutput SHA-256: ${hash}\nChanged executable bytes: ${patched.changed}\nConfig keys: ${patchedCfg.changedKeys.join(", ")}`;
+            $("results").hidden = false;
+            status("result-status", "Copies prepared. Your original files have not been changed.");
+        } catch (error) { if (current === generation) { clearOutputs(); status("result-status", error.message, true); } }
+        finally { busy = false; ready(); }
+    });
+})();
+</script>
+</body>
+</html>
